@@ -5,7 +5,9 @@ MJ.Routers.PostsRouter = Backbone.Router.extend ({
   },
 
   routes: {
-    "": "index"
+    "": "index",
+    "post/new": "new",
+    "posts/:id": "show"
   },
 
   index: function () {
@@ -16,5 +18,17 @@ MJ.Routers.PostsRouter = Backbone.Router.extend ({
     });
 
     that.$rootEl.html(postsListView.render().$el);
-  }
+  },
+
+  show: function (id) {
+    var that = this;
+
+    var post = that.posts.get(id);
+    var postDetailView = new MJ.Views.PostDetailView({
+      model: post
+    });
+
+    that.$rootEl.html(postDetailView.render().$el);
+  },
+
 });
