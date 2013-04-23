@@ -6,29 +6,39 @@ MJ.Routers.PostsRouter = Backbone.Router.extend ({
 
   routes: {
     "": "index",
-    "post/new": "new",
+    "posts/new": "new",
     "posts/:id": "show"
   },
 
   index: function () {
     var that = this;
 
-    var postsListView = new MJ.Views.PostsListView({
-      collection: that.posts
-    });
+    var $newButton = $("<a>Make a New Post</a>")
+                        .addClass("btn")
+                        .attr("href", "#/posts/new");
 
-    that.$rootEl.html(postsListView.render().$el);
+    that.$rootEl.html($newButton);
   },
 
   show: function (id) {
     var that = this;
 
     var post = that.posts.get(id);
-    var postDetailView = new MJ.Views.PostDetailView({
+    var postDetailView = new MJ.Views.PostDetailView ({
       model: post
     });
 
     that.$rootEl.html(postDetailView.render().$el);
   },
+
+  new: function () {
+    var that = this;
+
+    var newPostView = new MJ.Views.NewPostView ({
+      collection: that.posts
+    })
+
+    that.$rootEl.html(newPostView.render().$el);
+  }
 
 });
